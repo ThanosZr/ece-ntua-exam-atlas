@@ -1,194 +1,110 @@
 <!doctype html>
 <html lang="el">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ΣΗΜΜΥ ΕΜΠ — Exam Pattern</title>
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<style>
-:root{--bg:#0d1117;--panel:#161b22;--border:#30363d;--fg:#e6edf3;--muted:#8b949e;--btn:#21262d}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
-.wrap{max-width:1380px;margin:auto;padding:30px 20px 60px}
-h1{margin:0;font-size:clamp(28px,4vw,46px);letter-spacing:-.035em}
-.lead{color:var(--muted);max-width:920px;line-height:1.6;margin:10px 0 20px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.card,.panel{background:var(--panel);border:1px solid var(--border);border-radius:16px}
-.card{padding:16px 18px} .kpi{font-size:31px;font-weight:800;margin-top:3px} .label{font-size:13px;color:var(--muted)}
-.panel{overflow:hidden;margin-top:14px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 14px;border-bottom:1px solid var(--border)}
-button,select{background:var(--btn);color:var(--fg);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font:inherit}
-button{cursor:pointer} button.active{font-weight:800;background:#30363d}
-select{min-width:300px;max-width:100%}
-#chart{height:800px}
-.hint{padding:0 16px 14px;color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
-.inner{padding:18px} .inner h2{margin:0 0 12px;font-size:20px}
-.move{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #21262d}
-.move:last-child{border-bottom:0} .path{color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
-table{width:100%;border-collapse:collapse;font-size:14px} th,td{padding:9px 10px;border-bottom:1px solid #21262d;text-align:left}
-th{color:var(--muted)} td.r{text-align:center;font-variant-numeric:tabular-nums}
-.pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px;border:1px solid var(--border);background:var(--btn)}
-.sources{margin-top:18px;color:var(--muted);font-size:13px;line-height:1.65} .sources a{color:#58a6ff}
-@media(max-width:900px){.cards,.grid{grid-template-columns:1fr}#chart{height:680px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>ΣΗΜΜΥ ΕΜΠ · Exam Atlas 2024–2026</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="wrap">
-<h1>ΣΗΜΜΥ ΕΜΠ — η σειρά της εξεταστικής είναι σχεδόν template</h1>
-<p class="lead">
-Double-check στα επίσημα προγράμματα Φεβρουαρίου 2024, 2025 και 2026.
-Συγκρίνονται τα ίδια 19 επαναλαμβανόμενα μαθήματα και η θέση τους <b>μέσα στο κοινό αυτό σύνολο</b>.
-</p>
+  <div class="shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">ΣΗΜΜΥ ΕΜΠ · WINTER EXAM ATLAS · 2024–2026</div>
+        <h1>Η εξεταστική,<br><span>σαν δεδομένα.</span></h1>
+        <p>Διαδραστική σύγκριση κανονικής και επί πτυχίω χειμερινής εξεταστικής με πραγματικές ημερομηνίες, σειρά εξέτασης, έτος σπουδών, εξάμηνο, κορμό και ροές.</p>
+      </div>
+      <div class="hero-mark">ECE<br>NTUA</div>
+    </header>
 
-<div class="cards">
-  <div class="card"><div class="label">Ακριβώς ίδια θέση και στις 3 χρονιές</div><div class="kpi">16 / 19</div></div>
-  <div class="card"><div class="label">Σταθερότητα σχετικής σειράς</div><div class="kpi">84,2%</div></div>
-  <div class="card"><div class="label">Μαθήματα που όντως αλλάζουν θέση</div><div class="kpi">3</div></div>
-</div>
+    <div class="notice"><b>Ιδιαιτερότητα 2024 επί πτυχίω:</b> το επίσημο πρόγραμμα της περιόδου «Φεβρουαρίου 2024» διεξήχθη τελικά 1–18 Απριλίου 2024. Το Atlas εμφανίζει τις πραγματικές ημερομηνίες του δημοσιευμένου προγράμματος.</div>
 
-<div class="panel">
-  <div class="toolbar">
-    <button id="sankeyBtn" class="active">Sankey / alluvial</button>
-    <button id="bumpBtn">Bump chart</button>
-    <span style="width:8px"></span>
-    <button id="allBtn" class="active">Όλα</button>
-    <button id="moversBtn">Μόνο μετακινήσεις</button>
-    <select id="courseSelect"><option value="">Highlight μάθημα…</option></select>
+    <section id="kpis" class="kpis"></section>
+
+    <section class="controls card">
+      <div class="control-row">
+        <div class="control-group"><span class="control-title">Πρόγραμμα</span>
+          <button class="pill exam on" data-v="Κανονική">Κανονική</button>
+          <button class="pill exam" data-v="Επί πτυχίω">Πτυχιακή</button>
+          <button class="pill exam" data-v="Συνδυασμός">Συνδυασμός</button>
+        </div>
+        <div class="divider"></div>
+        <div class="control-group"><span class="control-title">Έτος πηγής</span>
+          <button class="pill yr on" data-v="2024">2024</button>
+          <button class="pill yr on" data-v="2025">2025</button>
+          <button class="pill yr on" data-v="2026">2026</button>
+        </div>
+        <input id="search" type="search" placeholder="Αναζήτηση μαθήματος…">
+      </div>
+
+      <div class="control-row">
+        <div class="control-group"><span class="control-title">Έτος σπουδών</span>
+          <button class="pill sy" data-v="1">1ο</button><button class="pill sy" data-v="2">2ο</button><button class="pill sy" data-v="3">3ο</button><button class="pill sy" data-v="4">4ο</button><button class="pill sy" data-v="5">5ο</button>
+        </div>
+        <div class="divider"></div>
+        <div class="control-group"><span class="control-title">Εξάμηνο</span>
+          <button class="pill sem" data-v="1">1</button><button class="pill sem" data-v="2">2</button><button class="pill sem" data-v="3">3</button><button class="pill sem" data-v="4">4</button><button class="pill sem" data-v="5">5</button><button class="pill sem" data-v="6">6</button><button class="pill sem" data-v="7">7</button><button class="pill sem" data-v="8">8</button><button class="pill sem" data-v="9">9</button>
+        </div>
+      </div>
+
+      <div class="control-row">
+        <div class="control-group"><span class="control-title">Τύπος</span>
+          <button class="pill cat" data-v="Κορμός">Κορμός</button><button class="pill cat" data-v="Ροή">Ροή</button><button class="pill cat" data-v="Ανθρωπιστικό">Ανθρωπιστικό</button><button class="pill cat" data-v="Λοιπό">Λοιπό</button>
+        </div>
+        <div class="divider"></div>
+        <div class="control-group"><span class="control-title">Ροή</span>
+          <button class="pill flow" data-v="Υ">Υ</button><button class="pill flow" data-v="Λ">Λ</button><button class="pill flow" data-v="Η">Η</button><button class="pill flow" data-v="Δ">Δ</button><button class="pill flow" data-v="Τ">Τ</button><button class="pill flow" data-v="Σ">Σ</button><button class="pill flow" data-v="Ζ">Ζ</button><button class="pill flow" data-v="Ε">Ε</button><button class="pill flow" data-v="Ο">Ο</button><button class="pill flow" data-v="Ι">Ι</button><button class="pill flow" data-v="Φ">Φ</button><button class="pill flow" data-v="Μ">Μ</button>
+        </div>
+        <div class="divider"></div>
+        <div class="control-group"><span class="control-title">Ώρα</span>
+          <button class="pill tm" data-v="08">08:30</button><button class="pill tm" data-v="12">12:00</button><button class="pill tm" data-v="15">15:00</button><button class="pill tm" data-v="18">18:00</button>
+        </div>
+      </div>
+
+      <div class="control-row final-row">
+        <label class="control-title" for="highlightSelect">Highlight</label>
+        <select id="highlightSelect"><option value="">— επίλεξε μάθημα —</option></select>
+        <button id="onlyHighlighted" class="pill">Απομόνωση</button>
+        <button id="clearHighlight" class="pill">Καθαρισμός</button>
+        <button id="reset" class="pill">Reset φίλτρων</button>
+        <span id="resultCount" class="muted"></span>
+      </div>
+    </section>
+
+    <section class="workspace card">
+      <nav class="tabs">
+        <button class="tab on" data-view="alluvial">Alluvial</button>
+        <button class="tab" data-view="calendar">Ημερολόγιο</button>
+        <button class="tab" data-view="table">Πίνακας</button>
+        <button class="tab" data-view="patterns">Patterns</button>
+        <button class="tab" data-view="sources">Πηγές / Validation</button>
+      </nav>
+
+      <div id="view-alluvial" class="view active">
+        <div class="view-head"><div><h2>Ροή προγράμματος ανά έτος</h2><p>Ονόματα αριστερά/δεξιά από το πεδίο ροών. Σε κάθε κόμβο φαίνεται η πραγματική ημερομηνία και ώρα. Κλικ σε μάθημα = highlight.</p></div><div id="alluvialHint" class="muted"></div></div>
+        <div id="alluvialViewport"><svg id="alluvialSvg"></svg></div>
+        <div id="inspector" class="inspector"></div>
+        <div class="legend"><span><i class="sw core"></i>Κορμός</span><span><i class="sw flowc"></i>Ροή</span><span><i class="sw hum"></i>Ανθρωπιστικό</span><span><i class="sw other"></i>Λοιπό</span><span class="muted">Στον Συνδυασμό, Κανονική και Επί πτυχίω παραμένουν ξεχωριστές σειρές.</span></div>
+      </div>
+
+      <div id="view-calendar" class="view"><div id="calendar" class="calendar"></div></div>
+      <div id="view-table" class="view"><div class="table-wrap"><table><thead><tr><th>Πρόγραμμα</th><th>Έτος</th><th>Ημερομηνία</th><th>Ώρα</th><th>Μάθημα</th><th>Έτος</th><th>Εξάμηνο</th><th>Τύπος</th><th>Ροή</th><th>Σημείωση</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+      <div id="view-patterns" class="view"><div id="patterns" class="patterns"></div></div>
+      <div id="view-sources" class="view"><div id="sources" class="sources"></div></div>
+    </section>
+
+    <footer>Static web app για GitHub Pages · Δεν απαιτεί backend ή build step.</footer>
   </div>
-  <div id="chart"></div>
-  <div class="hint">Hover για μάθημα και θέση. Το Sankey δείχνει αμέσως πού «σπάνε» οι οριζόντιες ροές· το bump chart είναι καλύτερο για ακριβή ανάγνωση.</div>
-</div>
+  <div id="tooltip" class="tooltip"></div>
 
-<div class="grid">
-  <div class="panel inner">
-    <h2>Οι μόνες 3 μετακινήσεις</h2>
-    <div class="move"><span>Οργάνωση και Διοίκηση</span><span class="path">14 → 9 → 9</span></div>
-    <div class="move"><span>Εισαγ. Εργαστήριο Ηλεκτρονικής & Τηλεπικοινωνιών</span><span class="path">9 → 17 → 14</span></div>
-    <div class="move"><span>Θεωρία Πιθανοτήτων & Στατιστική</span><span class="path">17 → 14 → 17</span></div>
-  </div>
-  <div class="panel inner">
-    <h2>Πώς να το διαβάσεις</h2>
-    <p style="color:var(--muted);line-height:1.6;margin:0">
-      Οι ευθείες ροές σημαίνουν ότι το μάθημα διατηρεί ακριβώς την ίδια σχετική θέση.
-      Οι διασταυρώσεις είναι οι πραγματικές αλλαγές. Άρα το περσινό πρόγραμμα είναι καλός μπούσουλας
-      για <b>σειρά</b>, όχι εγγύηση για συγκεκριμένη ημερομηνία ή κενό ημερών.
-    </p>
-  </div>
-</div>
-
-<div class="panel inner" style="margin-top:14px">
-<h2>Δεδομένα</h2>
-<div style="overflow:auto">
-<table><thead><tr><th>Μάθημα</th><th>2024</th><th>2025</th><th>2026</th><th>Κατάσταση</th></tr></thead><tbody id="tbody"></tbody></table>
-</div></div>
-
-<div class="sources">
-Πηγές: 
-<a href="https://old.ece.ntua.gr/gr/announcement/1628" target="_blank">2023–24</a> ·
-<a href="https://old.ece.ntua.gr/gr/announcement/1960" target="_blank">2024–25</a> ·
-<a href="https://old.ece.ntua.gr/gr/announcement/2266" target="_blank">2025–26</a>.
-<br>Η κατάταξη είναι σχετική μεταξύ των ίδιων 19 μαθημάτων, ώστε διαφορετικά/πρόσθετα μαθήματα κάθε χρονιάς να μην αλλοιώνουν τη σύγκριση.
-</div>
-</div>
-
-<script>
-const D=[{"course": "Ηλεκτρολογικό Σχέδιο", "short": "Ηλεκτρολογικό Σχέδιο", "2024": 1, "2025": 1, "2026": 1, "stable": true}, {"course": "Φυσική Ι", "short": "Φυσική Ι", "2024": 2, "2025": 2, "2026": 2, "stable": true}, {"course": "Ηλεκτρικές Μετρήσεις", "short": "Ηλεκτρικές Μετρήσεις", "2024": 3, "2025": 3, "2026": 3, "stable": true}, {"course": "Ηλεκτρομαγνητικά Πεδία Β", "short": "Η/Μ Πεδία Β", "2024": 4, "2025": 4, "2026": 4, "stable": true}, {"course": "Προγραμματισμός Η/Υ", "short": "Προγραμματισμός Η/Υ", "2024": 5, "2025": 5, "2026": 5, "stable": true}, {"course": "Σήματα και Συστήματα", "short": "Σήματα & Συστήματα", "2024": 6, "2025": 6, "2026": 6, "stable": true}, {"course": "Εισαγωγή στον Αυτόματο Έλεγχο", "short": "Εισαγωγή στον Αυτόματο Έλεγχο", "2024": 7, "2025": 7, "2026": 7, "stable": true}, {"course": "Μαθηματική Ανάλυση", "short": "Μαθηματική Ανάλυση", "2024": 8, "2025": 8, "2026": 8, "stable": true}, {"course": "Εισαγωγικό Εργαστήριο Ηλεκτρονικής & Τηλεπικοινωνιών", "short": "Εισαγ. Εργ. Ηλεκτρονικής & Τηλεπ.", "2024": 9, "2025": 17, "2026": 14, "stable": false}, {"course": "Εισαγωγή στα ΣΗΕ", "short": "Εισαγωγή στα ΣΗΕ", "2024": 10, "2025": 10, "2026": 10, "stable": true}, {"course": "Θεμελιώδη Θέματα Επιστήμης Υπολογιστών", "short": "Θεμελιώδη Θέματα Επιστ. Υπολογιστών", "2024": 11, "2025": 11, "2026": 11, "stable": true}, {"course": "Λογική Σχεδίαση Ψηφιακών Συστημάτων", "short": "Λογική Σχεδίαση Ψηφιακών", "2024": 12, "2025": 12, "2026": 12, "stable": true}, {"course": "Βιομηχανική Ηλεκτρονική", "short": "Βιομηχανική Ηλεκτρονική", "2024": 13, "2025": 13, "2026": 13, "stable": true}, {"course": "Οργάνωση και Διοίκηση", "short": "Οργάνωση & Διοίκηση", "2024": 14, "2025": 9, "2026": 9, "stable": false}, {"course": "Γραμμική Άλγεβρα", "short": "Γραμμική Άλγεβρα", "2024": 15, "2025": 15, "2026": 15, "stable": true}, {"course": "Αρχιτεκτονική Υπολογιστών", "short": "Αρχιτεκτονική Υπολογιστών", "2024": 16, "2025": 16, "2026": 16, "stable": true}, {"course": "Θεωρία Πιθανοτήτων & Στατιστική", "short": "Πιθανότητες & Στατιστική", "2024": 17, "2025": 14, "2026": 17, "stable": false}, {"course": "Φιλοσοφία", "short": "Φιλοσοφία", "2024": 18, "2025": 18, "2026": 18, "stable": true}, {"course": "Εισαγωγή στις Τηλεπικοινωνίες", "short": "Εισαγωγή στις Τηλεπικοινωνίες", "2024": 19, "2025": 19, "2026": 19, "stable": true}];
-const years=["2024","2025","2026"];
-const chart=document.getElementById("chart");
-const sel=document.getElementById("courseSelect");
-D.forEach(d=>{let o=document.createElement("option");o.value=d.course;o.textContent=d.course;sel.appendChild(o);});
-document.getElementById("tbody").innerHTML=D.map(d=>`<tr><td>${d.course}</td><td class="r">${d["2024"]}</td><td class="r">${d["2025"]}</td><td class="r">${d["2026"]}</td><td><span class="pill">${d.stable?"σταθερό":"μετακίνηση"}</span></td></tr>`).join("");
-
-let view="sankey", filter="all";
-
-function subset(){
-  let a=D.filter(d=>filter==="all"||!d.stable);
-  if(sel.value) {
-    const chosen=D.find(d=>d.course===sel.value);
-    if(chosen && !a.includes(chosen)) a=[chosen];
-  }
-  return a;
-}
-
-function sankey(){
-  const a=subset();
-  const nodes=[], x=[], y=[], labels=[], custom=[];
-  const idx={};
-  years.forEach((yr,yi)=>{
-    a.forEach((d,i)=>{
-      const k=yr+"|"+d.course; idx[k]=nodes.length; nodes.push(k);
-      x.push([0.01,0.5,0.99][yi]);
-      y.push((d[yr]-1)/19);
-      labels.push(yi===1?"":d.short);
-      custom.push(`${d.course}<br>${yr} · θέση ${d[yr]}`);
-    });
-  });
-  const source=[],target=[],value=[],linkCustom=[];
-  a.forEach(d=>{
-    source.push(idx["2024|"+d.course],idx["2025|"+d.course]);
-    target.push(idx["2025|"+d.course],idx["2026|"+d.course]);
-    value.push(1,1);
-    linkCustom.push(`${d.course}<br>2024: ${d["2024"]} → 2025: ${d["2025"]}`,
-                    `${d.course}<br>2025: ${d["2025"]} → 2026: ${d["2026"]}`);
-  });
-  const trace={
-    type:"sankey", arrangement:"fixed",
-    node:{pad:7,thickness:9,label:labels,x:x,y:y,customdata:custom,hovertemplate:"%{customdata}<extra></extra>"},
-    link:{source,target,value,customdata:linkCustom,hovertemplate:"%{customdata}<extra></extra>"}
-  };
-  Plotly.react(chart,[trace],{
-    paper_bgcolor:"#161b22",plot_bgcolor:"#161b22",font:{color:"#e6edf3",size:11},
-    margin:{l:220,r:220,t:70,b:30},
-    title:{text:filter==="movers"?"Μόνο οι 3 αλλαγές σειράς":"Ροή θέσης: 2024 → 2025 → 2026",x:.5,xanchor:"center"},
-    annotations:[
-      {x:.01,y:1.045,xref:"paper",yref:"paper",text:"2024",showarrow:false,font:{size:16}},
-      {x:.50,y:1.045,xref:"paper",yref:"paper",text:"2025",showarrow:false,font:{size:16}},
-      {x:.99,y:1.045,xref:"paper",yref:"paper",text:"2026",showarrow:false,font:{size:16}}
-    ]
-  },{responsive:true,displaylogo:false});
-}
-
-function bump(){
-  const a=subset();
-  const traces=a.map(d=>({
-    type:"scatter",mode:"lines+markers",x:years,y:years.map(y=>d[y]),name:d.course,
-    hovertemplate:`<b>${d.course}</b><br>%{x}: θέση %{y}<extra></extra>`,
-    line:{width:d.stable?2:4},marker:{size:d.stable?7:10},opacity:d.stable?.55:1
-  }));
-  Plotly.react(chart,traces,{
-    paper_bgcolor:"#161b22",plot_bgcolor:"#161b22",font:{color:"#e6edf3"},
-    margin:{l:75,r:30,t:60,b:150},
-    title:{text:filter==="movers"?"Οι 3 μετακινήσεις":"Bump chart σχετικής σειράς",x:.02},
-    xaxis:{title:"Εξεταστική",fixedrange:true,gridcolor:"#30363d",zeroline:false},
-    yaxis:{title:"Σειρά εξέτασης",autorange:"reversed",dtick:1,range:[19.5,.5],gridcolor:"#30363d",zeroline:false},
-    hovermode:"closest",
-    legend:{orientation:"h",y:-.18,x:0,font:{size:10}},
-    uirevision:"keep"
-  },{responsive:true,displaylogo:false,modeBarButtonsToRemove:["lasso2d","select2d"]});
-}
-
-function render(){ view==="sankey"?sankey():bump(); }
-
-function setView(v){
-  view=v;
-  document.getElementById("sankeyBtn").classList.toggle("active",v==="sankey");
-  document.getElementById("bumpBtn").classList.toggle("active",v==="bump");
-  render();
-}
-function setFilter(f){
-  filter=f;
-  document.getElementById("allBtn").classList.toggle("active",f==="all");
-  document.getElementById("moversBtn").classList.toggle("active",f==="movers");
-  render();
-}
-
-document.getElementById("sankeyBtn").onclick=()=>setView("sankey");
-document.getElementById("bumpBtn").onclick=()=>setView("bump");
-document.getElementById("allBtn").onclick=()=>setFilter("all");
-document.getElementById("moversBtn").onclick=()=>setFilter("movers");
-sel.onchange=()=>{ if(sel.value){filter="all";document.getElementById("allBtn").classList.add("active");document.getElementById("moversBtn").classList.remove("active");} render(); };
-
-render();
-</script>
-</body></html>
+  <script src="metadata.js"></script>
+  <script src="data/regular-2024.js"></script>
+  <script src="data/regular-2025.js"></script>
+  <script src="data/regular-2026.js"></script>
+  <script src="data/degree-2024.js"></script>
+  <script src="data/degree-2025.js"></script>
+  <script src="data/degree-2026.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
