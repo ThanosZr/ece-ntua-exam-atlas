@@ -1,5 +1,7 @@
 (() => {
   const RAW = window.EXAM_ROWS || [];
+  const YEARS = [...new Set(RAW.map(r=>r.source_year))].sort((a,b)=>a-b);
+  const DEFAULT_YEARS = YEARS.slice(-2);
   const META = window.EXAM_META || {};
   const SOURCES = window.EXAM_SOURCES || [];
   const $ = s => document.querySelector(s);
@@ -24,16 +26,20 @@
   });
 
   for(const program of ['Κανονική','Επί πτυχίω']){
-    for(const year of [2024,2025,2026]){
+    for(const year of YEARS){
       const rr=DATA.filter(r=>r.exam_type===program&&r.source_year===year);
       const days=[...new Set(rr.map(r=>r.iso_date))].sort();
       const rank=new Map(days.map((d,i)=>[d,i+1]));
-      rr.forEach(r=>r.exam_day=rank.get(r.iso_date));
+      const start=days[0] ? Date.parse(days[0]+'T00:00:00Z') : 0;
+      rr.forEach(r=>{
+        r.exam_day=rank.get(r.iso_date);
+        r.period_day=(Date.parse(r.iso_date+'T00:00:00Z')-start)/86400000;
+      });
     }
   }
 
   const state={
-    exam:'Κανονική', years:new Set([2024,2025,2026]), studyYears:new Set(), semesters:new Set(),
+    exam:'Κανονική', years:new Set(DEFAULT_YEARS), studyYears:new Set(), semesters:new Set(),
     cats:new Set(), flows:new Set(), times:new Set(), q:'', highlight:'', isolate:false, view:'alluvial'
   };
 
@@ -64,14 +70,20 @@
   $$('.cat').forEach(b=>b.onclick=()=>toggleSet(b,state.cats));
   $$('.flow').forEach(b=>b.onclick=()=>toggleSet(b,state.flows));
   $$('.tm').forEach(b=>b.onclick=()=>toggleSet(b,state.times));
-  $$('.exam').forEach(b=>b.onclick=()=>{state.exam=b.dataset.v;state.isolate=false;$$('.exam').forEach(x=>x.classList.toggle('on',x===b));render();});
+  $$('.exam').forEach(b=>b.onclick=()=>{
+    state.exam=b.dataset.v;state.isolate=false;
+    const available=YEARS.filter(y=>DATA.some(r=>r.source_year===y&&(state.exam==='Συνδυασμός'||r.exam_type===state.exam)));
+    if(![...state.years].some(y=>available.includes(y)))state.years=new Set(available.slice(-1));
+    $$('.exam').forEach(x=>x.classList.toggle('on',x===b));
+    $('#onlyHighlighted').classList.remove('on');render();
+  });
   $('#search').oninput=e=>{state.q=e.target.value;render();};
   $('#highlightSelect').onchange=e=>{state.highlight=e.target.value;state.isolate=false;$('#onlyHighlighted').classList.remove('on');render();if(state.highlight)setTimeout(scrollHighlight,30);};
   $('#onlyHighlighted').onclick=()=>{if(!state.highlight)return;state.isolate=!state.isolate;$('#onlyHighlighted').classList.toggle('on',state.isolate);render();};
   $('#clearHighlight').onclick=()=>{state.highlight='';state.isolate=false;$('#onlyHighlighted').classList.remove('on');render();};
   $('#reset').onclick=()=>{
-    state.exam='Κανονική';state.years=new Set([2024,2025,2026]);state.studyYears.clear();state.semesters.clear();state.cats.clear();state.flows.clear();state.times.clear();state.q='';state.highlight='';state.isolate=false;
-    $('#search').value='';$$('.pill').forEach(x=>x.classList.remove('on'));$$('.yr').forEach(x=>x.classList.add('on'));$$('.exam').forEach(x=>x.classList.toggle('on',x.dataset.v==='Κανονική'));render();
+    state.exam='Κανονική';state.years=new Set(DEFAULT_YEARS);state.studyYears.clear();state.semesters.clear();state.cats.clear();state.flows.clear();state.times.clear();state.q='';state.highlight='';state.isolate=false;
+    $('#search').value='';$$('.pill').forEach(x=>x.classList.remove('on'));$$('.exam').forEach(x=>x.classList.toggle('on',x.dataset.v==='Κανονική'));render();
   };
   $$('.tab').forEach(b=>b.onclick=()=>{state.view=b.dataset.view;$$('.tab').forEach(x=>x.classList.toggle('on',x===b));$$('.view').forEach(v=>v.classList.remove('active'));$('#view-'+state.view).classList.add('active');render();});
 
@@ -141,9 +153,9 @@
     const years=[...state.years].sort();
     if(!rows.length||!years.length){svg.setAttribute('height',300);svg.setAttribute('width',1600);svg.appendChild(svgEl('text',{x:800,y:150,fill:'#8da1b4','text-anchor':'middle'},'Δεν υπάρχουν δεδομένα με αυτά τα φίλτρα.'));$('#inspector').classList.remove('show');return;}
     const {map,by}=aggregateNodes(rows,years);
-    const maxN=Math.max(...years.map(y=>by[y].length),1),gap=31,top=82,bottom=58,H=Math.max(840,top+bottom+(maxN-1)*gap),W=1740,usable=H-top-bottom;
+    const maxN=Math.max(...years.map(y=>by[y].length),1),gap=31,top=82,bottom=58,H=Math.max(840,top+bottom+(maxN-1)*gap),W=1740+Math.max(0,years.length-3)*290,usable=H-top-bottom;
     svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('width',W);svg.setAttribute('height',H);
-    const xs=years.length===1?[870]:years.length===2?[630,1110]:[580,870,1160];
+    const xs=years.length===1?[870]:years.length===2?[630,1110]:years.map((_,i)=>580+i*290);
     years.forEach((y,i)=>{const x=xs[i];svg.appendChild(svgEl('line',{x1:x,y1:top-18,x2:x,y2:H-bottom+18,stroke:'#2a3b4b','stroke-width':2}));svg.appendChild(svgEl('text',{x,y:32,fill:'#eaf2f9','font-size':21,'font-weight':850,'text-anchor':'middle'},String(y)));svg.appendChild(svgEl('text',{x,y:55,fill:'#7890a4','font-size':11,'text-anchor':'middle'},state.exam));});
 
     const series=[...new Set([...map.values()].map(n=>n.series))];
@@ -171,7 +183,7 @@
       wrapText(g,n.course,xLab,yy-4,anchor,45);
       const meta=[n.date,n.time_label,state.exam==='Συνδυασμός'?n.program:null,n.study_year?`${n.study_year}ο έτος / ${n.semester}ο εξ.`:null,n.flow!=='—'?`Ροή ${n.flow}`:n.category].filter(Boolean).join(' · ');
       g.appendChild(svgEl('text',{x:xLab,y:yy+14,fill:'#7890a4','font-size':9.4,'text-anchor':anchor},meta));
-      g.appendChild(svgEl('line',{x1:left?420:1320,y1:yy,x2:left?xAxis-9:xAxis+9,y2:yy,stroke:'#263747','stroke-width':1}));
+      g.appendChild(svgEl('line',{x1:left?420:W-420,y1:yy,x2:left?xAxis-9:xAxis+9,y2:yy,stroke:'#263747','stroke-width':1}));
       g.onmouseenter=e=>showTip(e,n);g.onmousemove=moveTip;g.onmouseleave=hideTip;g.onclick=()=>selectCourse(n.course);svg.appendChild(g);
     }};
     drawSide(years[0],true);if(years.length>1)drawSide(years[years.length-1],false);
@@ -202,19 +214,39 @@
 
   function renderPatterns(rows){
     const years=[...state.years].sort();
-    const keyOf=r=>state.exam==='Συνδυασμός'?`${r.exam_type}|${r.course}`:r.course;
+    const keyOf=r=>`${r.exam_type}|${r.course}`;
     const groups=new Map();
-    for(const r of rows){const k=keyOf(r);if(!groups.has(k))groups.set(k,new Map());const ym=groups.get(k);if(!ym.has(r.source_year)||r.exam_day<ym.get(r.source_year).exam_day)ym.set(r.source_year,r);}
+    for(const r of rows){
+      const k=keyOf(r);
+      if(!groups.has(k))groups.set(k,new Map());
+      const ym=groups.get(k);
+      if(!ym.has(r.source_year))ym.set(r.source_year,[]);
+      ym.get(r.source_year).push(r);
+    }
     const cmp=[];
-    for(const [k,ym] of groups){const ys=years.filter(y=>ym.has(y));if(ys.length<2)continue;const vals=ys.map(y=>ym.get(y).exam_day),span=Math.max(...vals)-Math.min(...vals),sample=ym.get(ys[0]);cmp.push({label:state.exam==='Συνδυασμός'?`${sample.course} · ${sample.exam_type}`:sample.course,span,detail:ys.map(y=>`${y}: #${ym.get(y).exam_day} (${ym.get(y).date_short})`).join(' · ')})}
-    cmp.sort((a,b)=>b.span-a.span||a.label.localeCompare(b.label,'el'));const max=Math.max(1,...cmp.map(x=>x.span)),stable=cmp.filter(x=>x.span===0).length;
-    const timeConsistency=[];
-    for(const [k,ym] of groups){const ys=years.filter(y=>ym.has(y));if(ys.length<2)continue;const times=ys.map(y=>ym.get(y).time);const sample=ym.get(ys[0]);timeConsistency.push({label:state.exam==='Συνδυασμός'?`${sample.course} · ${sample.exam_type}`:sample.course,same:new Set(times).size===1,times:ys.map(y=>`${y}: ${ym.get(y).time}`).join(' · ')})}
-    const sameTime=timeConsistency.filter(x=>x.same).length;
-    const flows={};rows.forEach(r=>flows[r.flow]=(flows[r.flow]||0)+1);const fs=Object.entries(flows).sort((a,b)=>b[1]-a[1]),fm=Math.max(1,...fs.map(x=>x[1]));
+    for(const ym of groups.values()){
+      const ys=years.filter(y=>ym.has(y));
+      if(ys.length<2)continue;
+      const sample=ym.get(ys[0])[0];
+      const positions=ys.map(y=>Math.min(...ym.get(y).map(r=>r.period_day)));
+      const signature=y=>ym.get(y).map(r=>`${r.period_day}|${r.time}`).sort().join(';');
+      const timeSignature=y=>[...new Set(ym.get(y).map(r=>r.time))].sort().join(' + ');
+      cmp.push({
+        label:state.exam==='Συνδυασμός'?`${sample.course} · ${sample.exam_type}`:sample.course,
+        span:Math.max(...positions)-Math.min(...positions),
+        unchanged:new Set(ys.map(signature)).size===1,
+        sameTime:new Set(ys.map(timeSignature)).size===1,
+        detail:ys.map(y=>`${y}: ${ym.get(y).map(r=>`${r.date_short} ${r.time}`).join(' / ')}`).join(' · ')
+      });
+    }
+    cmp.sort((a,b)=>b.span-a.span||a.label.localeCompare(b.label,'el'));
+    const changed=cmp.filter(x=>!x.unchanged),max=Math.max(1,...cmp.map(x=>x.span));
+    const stable=cmp.filter(x=>x.unchanged).length,sameTime=cmp.filter(x=>x.sameTime).length;
+    const flows={};rows.forEach(r=>flows[r.flow]=(flows[r.flow]||0)+1);
+    const fs=Object.entries(flows).sort((a,b)=>b[1]-a[1]),fm=Math.max(1,...fs.map(x=>x[1]));
     $('#patterns').innerHTML=`
-      <div class="pattern-card"><h3>Μεγαλύτερες μετακινήσεις στη normalized exam-day θέση</h3><div class="muted" style="margin-bottom:10px">Η θέση μετριέται ως ημέρα # μέσα στο εκάστοτε πρόγραμμα, ώστε να μη μας ξεγελά διαφορετική ημερομηνία έναρξης.</div>${cmp.slice(0,24).map(x=>`<div class="bar-row"><span title="${esc(x.detail)}">${esc(x.label)}</span><span class="bar-track"><i class="bar-fill" style="width:${Math.max(3,100*x.span/max)}%"></i></span><b>${x.span}</b></div>`).join('')||'<div class="muted">Χρειάζονται τουλάχιστον δύο έτη για σύγκριση.</div>'}</div>
-      <div><div class="pattern-card"><h3>Σταθερότητα</h3><div class="kpi"><div class="label">Συγκρίσιμες σειρές</div><div class="value">${cmp.length}</div></div><div class="muted">${stable} κρατούν ακριβώς την ίδια exam-day θέση. ${sameTime}/${timeConsistency.length||0} κρατούν και την ίδια ώρα.</div></div><div class="pattern-card" style="margin-top:14px"><h3>Κατανομή ανά ροή</h3>${fs.map(([f,n])=>`<div class="bar-row"><span>${f==='—'?'Χωρίς ροή':'Ροή '+esc(f)}</span><span class="bar-track"><i class="bar-fill" style="width:${100*n/fm}%"></i></span><b>${n}</b></div>`).join('')}</div></div>`;
+      <div class="pattern-card"><h3>Μετακινήσεις μέσα στην εξεταστική</h3><div class="muted" style="margin-bottom:10px">Μετράμε ημερολογιακές ημέρες από την έναρξη κάθε προγράμματος, πριν από τα φίλτρα. Οι κενές ημέρες και οι αργίες διατηρούνται. Διαφορετικοί τίτλοι δεν ταυτίζονται αυτόματα. Στον Συνδυασμό συγκρίνουμε κάθε τύπο εξεταστικής χωριστά.</div>${changed.slice(0,24).map(x=>`<div class="bar-row"><span title="${esc(x.detail)}">${esc(x.label)}<br><small class="muted">${esc(x.detail)}</small></span><span class="bar-track"><i class="bar-fill" style="width:${Math.max(3,100*x.span/max)}%"></i></span><b>${x.span}</b></div>`).join('')||'<div class="muted">'+(cmp.length?'Δεν υπάρχουν αλλαγές θέσης ή ώρας στα κοινά μαθήματα.':'Χρειάζονται τουλάχιστον δύο έτη με κοινά μαθήματα για σύγκριση.')+'</div>'}</div>
+      <div><div class="pattern-card"><h3>Σταθερότητα κοινών μαθημάτων</h3><div class="kpi"><div class="label">Συγκρίσιμες σειρές</div><div class="value">${cmp.length}</div></div><div class="muted">${stable} κρατούν ακριβώς την ίδια θέση και όλες τις ώρες εξέτασης. ${sameTime}/${cmp.length} κρατούν τις ίδιες ώρες.</div></div><div class="pattern-card" style="margin-top:14px"><h3>Κατανομή ανά ροή</h3>${fs.map(([f,n])=>`<div class="bar-row"><span>${f==='—'?'Χωρίς ροή':'Ροή '+esc(f)}</span><span class="bar-track"><i class="bar-fill" style="width:${100*n/fm}%"></i></span><b>${n}</b></div>`).join('')}</div></div>`;
   }
 
   function validation(){
@@ -226,7 +258,7 @@
     const exactDup=[...exact].filter(([,n])=>n>1);
     const multiDate=[...courseYearDates].filter(([,ds])=>ds.size>1);
     const unmapped=[...new Set(DATA.filter(r=>!r.semester).map(r=>r.course))].sort((a,b)=>a.localeCompare(b,'el'));
-    const counts={};for(const p of ['Κανονική','Επί πτυχίω'])for(const y of [2024,2025,2026])counts[`${p} ${y}`]=DATA.filter(r=>r.exam_type===p&&r.source_year===y).length;
+    const counts={};for(const p of ['Κανονική','Επί πτυχίω'])for(const y of YEARS)counts[`${p} ${y}`]=DATA.filter(r=>r.exam_type===p&&r.source_year===y).length;
     return {exactDup,multiDate,unmapped,counts};
   }
   function renderSources(){
@@ -242,6 +274,13 @@
   const exportBtn=document.createElement('button');exportBtn.className='pill';exportBtn.textContent='Εξαγωγή CSV';exportBtn.onclick=downloadCSV;$('#reset').insertAdjacentElement('afterend',exportBtn);
 
   function render(){
+    const available=new Set(DATA.filter(r=>state.exam==='Συνδυασμός'||r.exam_type===state.exam).map(r=>r.source_year));
+    for(const y of state.years)if(!available.has(y))state.years.delete(y);
+    $$('.yr').forEach(b=>{
+      b.disabled=!available.has(Number(b.dataset.v));
+      b.title=b.disabled?'Δεν έχει ενσωματωθεί πρόγραμμα για αυτό το έτος.':'';
+      b.classList.toggle('on',state.years.has(Number(b.dataset.v)));
+    });
     updateHighlightOptions();const rows=filtered();renderKpis(rows);
     if(state.view==='alluvial')renderAlluvial(rows);
     else if(state.view==='calendar')renderCalendar(rows);

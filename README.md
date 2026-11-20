@@ -1,11 +1,11 @@
-# ΣΗΜΜΥ ΕΜΠ — Winter Exam Atlas 2024–2026
+# ΣΗΜΜΥ ΕΜΠ — Winter Exam Atlas 2024–2027
 
 Static web app for comparing the official ECE NTUA winter examination schedules.
 
 ## What is included
 
 - **Κανονική / Πτυχιακή (Επί πτυχίω) / Συνδυασμός**
-- source-year filters: **2024 / 2025 / 2026**
+- source-year filters: **2024 / 2025 / 2026 / 2027**; opens with **2026 + 2027**
 - filters by **study year**, **semester**, **core / flow**, **specific flow**, and **exam time**
 - full-text course search
 - highlight and **true isolation** of a selected course
@@ -14,7 +14,7 @@ Static web app for comparing the official ECE NTUA winter examination schedules.
 - course inspector showing each selected year's date, time and normalized exam-day number
 - calendar view
 - full data table
-- patterns view for normalized exam-day movement and time consistency
+- patterns view for calendar-day movement from each program's start and consistency of all time slots
 - source / validation view
 - CSV export of the currently filtered dataset
 - no framework, no backend, no build step, no external JavaScript dependency
@@ -34,6 +34,7 @@ data/
   regular-2024.js
   regular-2025.js
   regular-2026.js
+  regular-2027.js
   degree-2024.js
   degree-2025.js
   degree-2026.js
@@ -69,7 +70,9 @@ It regenerates:
 - `data.csv`
 - `validation.json`
 
-The current dataset contains **564 schedule entries** and **198 unique canonical course names**, with no exact duplicate rows and no unmapped course metadata.
+The current dataset contains **654 schedule entries** and **206 unique canonical course names**, with no exact duplicate rows and no unmapped course metadata. The 2027 regular schedule contains **90 entries / 89 courses**, from **18 January to 12 February 2027**, using the official **20 November 2026** edition. No 2027 degree schedule is included; that year is disabled in the degree-only view.
+
+Run the schedule regression checks with `node test-schedules.js`. See `WINTER_2027_CHANGES.md` for the comparison with 2026. The Patterns view measures elapsed calendar days from the start of each complete program, before filters, so an extra examination day does not shift every later course artificially. The inspector's exam-day number still counts dates with entries.
 
 ## Important source notes
 

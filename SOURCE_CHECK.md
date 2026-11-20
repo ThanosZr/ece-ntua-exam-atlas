@@ -7,6 +7,12 @@ The application is based on official ECE NTUA / ΣΗΜΜΥ published schedules.
 - 2024: https://old.ece.ntua.gr/gr/announcement/1628
 - 2025: https://old.ece.ntua.gr/gr/announcement/1960
 - 2026: https://old.ece.ntua.gr/gr/announcement/2266
+- 2027: https://www.ece.ntua.gr/el/announcementDetails/27296992-e50b-11f1-a8c2-000c296d8b20
+- 2027 PDF, edition 20261120: https://www.ece.ntua.gr/api/files/display?type=announcements&itemId=27296992-e50b-11f1-a8c2-000c296d8b20&filename=1795197148956-Programma_cheimerinis_exetastikis_ak._etous_2026-2027.pdf
+
+Checked 20 November 2026. The announcement was published at 17:52 UTC that day. The PDF contains 90 scheduled entries (89 courses, because the electromagnetic-fields course has two surname groups). Its third page continues 29 January at 18:00 with Γλώσσες Προγραμματισμού ΙΙ; that continuation is included. Consultation notes and the philosophy co-examination note are retained. No 2027 degree schedule has been imported.
+
+The 2026 regular dataset had two outdated titles, corrected to the titles actually printed in its official PDF: `Τεχνολογίες Κινητού Υπολογισμού με Μηχανική Μάθηση` and `Προηγμένες Εφαρμογές Ηλεκτρομαγνητικής Θεωρίας`. Their dates and times are unchanged. The 2027 titles `Δυναμικά Ηλεκτρομαγνητικά Πεδία`, `Έλεγχος Βάσει Μάθησης`, and `Συστήματα Διαχείρισης Πληροφοριών` remain separate from the older titles; no curricular equivalence is inferred.
 
 ## Degree / επί πτυχίω schedules
 
@@ -17,6 +23,7 @@ The application is based on official ECE NTUA / ΣΗΜΜΥ published schedules.
 ## Curriculum metadata
 
 - https://www.ece.ntua.gr/el/education/undergraduate/info
+- New-title flow classifications: official course catalogue at https://www.ece.ntua.gr/el/education/undergraduate/courses (Σ: 3179, 3175, 3279; Λ: 3320, 3321; Τ: 3301, 3404). Semester placements for the new titles are also printed in the schedule.
 
 Metadata such as semester, study year, core/flow status and flow code is used for filtering. The **date/time rows** are kept separately in the six `data/*.js` files so the source schedule is not coupled to classification metadata.
 

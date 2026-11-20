@@ -720,3 +720,4 @@ footer{
     text-align:center;
   }
 }
+.pill:disabled{opacity:.4;cursor:default;}
