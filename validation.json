@@ -1,26 +1,179 @@
 {
-  "generated_at": "2026-11-20T18:28:49.656Z",
-  "records": 654,
-  "unique_courses": 206,
+  "generated_at": "2026-11-22T11:50:41.374Z",
+  "records": 1728,
+  "unique_courses": 217,
   "counts": {
-    "Κανονική 2024": 88,
-    "Κανονική 2025": 89,
-    "Κανονική 2026": 88,
-    "Κανονική 2027": 90,
-    "Επί πτυχίω 2024": 106,
-    "Επί πτυχίω 2025": 105,
-    "Επί πτυχίω 2026": 88,
-    "Επί πτυχίω 2027": 0
+    "Χειμερινή 2024": {
+      "records": 88,
+      "scheduled": 88,
+      "without_fixed_day_or_time": 0
+    },
+    "Χειμερινή 2025": {
+      "records": 89,
+      "scheduled": 89,
+      "without_fixed_day_or_time": 0
+    },
+    "Χειμερινή 2026": {
+      "records": 88,
+      "scheduled": 88,
+      "without_fixed_day_or_time": 0
+    },
+    "Χειμερινή 2027": {
+      "records": 90,
+      "scheduled": 90,
+      "without_fixed_day_or_time": 0
+    },
+    "Πτυχιακή χειμερινού 2024": {
+      "records": 106,
+      "scheduled": 106,
+      "without_fixed_day_or_time": 0
+    },
+    "Πτυχιακή χειμερινού 2025": {
+      "records": 105,
+      "scheduled": 105,
+      "without_fixed_day_or_time": 0
+    },
+    "Πτυχιακή χειμερινού 2026": {
+      "records": 88,
+      "scheduled": 88,
+      "without_fixed_day_or_time": 0
+    },
+    "Πτυχιακή χειμερινού 2027": {
+      "records": 0,
+      "scheduled": 0,
+      "without_fixed_day_or_time": 0
+    },
+    "Εαρινή 2024": {
+      "records": 90,
+      "scheduled": 83,
+      "without_fixed_day_or_time": 7
+    },
+    "Εαρινή 2025": {
+      "records": 90,
+      "scheduled": 90,
+      "without_fixed_day_or_time": 0
+    },
+    "Εαρινή 2026": {
+      "records": 91,
+      "scheduled": 91,
+      "without_fixed_day_or_time": 0
+    },
+    "Εαρινή 2027": {
+      "records": 0,
+      "scheduled": 0,
+      "without_fixed_day_or_time": 0
+    },
+    "Πτυχιακή εαρινού 2024": {
+      "records": 89,
+      "scheduled": 85,
+      "without_fixed_day_or_time": 4
+    },
+    "Πτυχιακή εαρινού 2025": {
+      "records": 88,
+      "scheduled": 26,
+      "without_fixed_day_or_time": 62
+    },
+    "Πτυχιακή εαρινού 2026": {
+      "records": 83,
+      "scheduled": 26,
+      "without_fixed_day_or_time": 57
+    },
+    "Πτυχιακή εαρινού 2027": {
+      "records": 0,
+      "scheduled": 0,
+      "without_fixed_day_or_time": 0
+    },
+    "Επαναληπτική 2024": {
+      "records": 181,
+      "scheduled": 163,
+      "without_fixed_day_or_time": 18
+    },
+    "Επαναληπτική 2025": {
+      "records": 182,
+      "scheduled": 168,
+      "without_fixed_day_or_time": 14
+    },
+    "Επαναληπτική 2026": {
+      "records": 180,
+      "scheduled": 167,
+      "without_fixed_day_or_time": 13
+    },
+    "Επαναληπτική 2027": {
+      "records": 0,
+      "scheduled": 0,
+      "without_fixed_day_or_time": 0
+    }
   },
   "exact_duplicate_rows": [],
   "multi_date_same_course_program_year": [
     {
-      "key": "Επί πτυχίω|2026|Μεταγλωτιστές",
+      "key": "winter-degree|2026|Μεταγλωτιστές",
       "dates": [
         "29/01/2026",
         "03/02/2026"
       ]
     }
   ],
+  "invalid_dates": [],
+  "invalid_times": [],
+  "inferred_year_entries": [
+    {
+      "course": "Εισαγωγή στα Συστήματα Ηλεκτρικής Ενέργειας",
+      "date": "29/04/2025",
+      "source_date": "29/04/2023",
+      "source_id": "spring-degree-2025",
+      "source_page": 1
+    },
+    {
+      "course": "Ψηφιακή Επεξεργασία Σήματος",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    },
+    {
+      "course": "Συστήματα Μετάδοσης Οπτικών Ινών",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    },
+    {
+      "course": "Ψηφιακές Επικοινωνίες Ι",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    },
+    {
+      "course": "Ειδικά Θέματα Φιλοσοφίας",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    },
+    {
+      "course": "Διαχείριση Δικτύων - Ευφυή Δίκτυα",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    },
+    {
+      "course": "Παραγωγή Υψηλών Τάσεων",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    },
+    {
+      "course": "Συστήματα Χρηματοοικονομικής Διοίκησης",
+      "date": "19/09/2024",
+      "source_date": "19/09/2029",
+      "source_id": "resit-2024",
+      "source_page": 4
+    }
+  ],
+  "no_fixed_day_or_time": 175,
   "unmapped_courses": []
 }
