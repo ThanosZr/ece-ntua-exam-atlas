@@ -4,36 +4,43 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>ΣΗΜΜΥ ΕΜΠ · Exam Atlas 2024–2026</title>
+  <title>ΣΗΜΜΥ ΕΜΠ · Exam Atlas 2024–2027</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="shell">
     <header class="hero">
       <div>
-        <div class="eyebrow">ΣΗΜΜΥ ΕΜΠ · WINTER EXAM ATLAS · 2024–2026</div>
+        <div class="eyebrow">ΣΗΜΜΥ ΕΜΠ · EXAM ATLAS · 2024–2027</div>
         <h1>Η εξεταστική,<br><span>σαν δεδομένα.</span></h1>
-        <p>Διαδραστική σύγκριση κανονικής και επί πτυχίω χειμερινής εξεταστικής με πραγματικές ημερομηνίες, σειρά εξέτασης, έτος σπουδών, εξάμηνο, κορμό και ροές.</p>
+        <p>Πέντε εξεταστικές περίοδοι, ξεχωριστά. Σύγκρινε έτη, βρες τις ημερομηνίες των μαθημάτων σου και έλεγξε κάθε εγγραφή στην επίσημη πηγή.</p>
       </div>
       <div class="hero-mark">ECE<br>NTUA</div>
     </header>
 
-    <div class="notice"><b>Ιδιαιτερότητα 2024 επί πτυχίω:</b> το επίσημο πρόγραμμα της περιόδου «Φεβρουαρίου 2024» διεξήχθη τελικά 1–18 Απριλίου 2024. Το Atlas εμφανίζει τις πραγματικές ημερομηνίες του δημοσιευμένου προγράμματος.</div>
+    <section class="period-panel card" aria-label="Εξεταστική περίοδος">
+      <div class="period-tabs" role="group" aria-label="Επίλεξε εξεταστική">
+        <button class="pill exam on" data-v="winter">Χειμερινή</button>
+        <button class="pill exam" data-v="winter-degree">Πτυχιακή χειμερινού</button>
+        <button class="pill exam" data-v="spring">Εαρινή</button>
+        <button class="pill exam" data-v="spring-degree">Πτυχιακή εαρινού</button>
+        <button class="pill exam" data-v="resit">Επαναληπτική</button>
+        <button class="pill exam" data-v="all">Όλες οι περίοδοι</button>
+      </div>
+      <h2 id="periodTitle">Χειμερινή</h2>
+      <p id="periodDescription"></p>
+      <p id="availabilityNote" class="muted" aria-live="polite"></p>
+    </section>
 
     <section id="kpis" class="kpis"></section>
 
     <section class="controls card">
       <div class="control-row">
-        <div class="control-group"><span class="control-title">Πρόγραμμα</span>
-          <button class="pill exam on" data-v="Κανονική">Κανονική</button>
-          <button class="pill exam" data-v="Επί πτυχίω">Πτυχιακή</button>
-          <button class="pill exam" data-v="Συνδυασμός">Συνδυασμός</button>
-        </div>
-        <div class="divider"></div>
-        <div class="control-group"><span class="control-title">Έτος πηγής</span>
-          <button class="pill yr on" data-v="2024">2024</button>
-          <button class="pill yr on" data-v="2025">2025</button>
+        <div class="control-group"><span class="control-title">Έτος εξέτασης</span>
+          <button class="pill yr" data-v="2024">2024</button>
+          <button class="pill yr" data-v="2025">2025</button>
           <button class="pill yr on" data-v="2026">2026</button>
+          <button class="pill yr on" data-v="2027">2027</button>
         </div>
         <input id="search" type="search" placeholder="Αναζήτηση μαθήματος…">
       </div>
@@ -58,7 +65,7 @@
         </div>
         <div class="divider"></div>
         <div class="control-group"><span class="control-title">Ώρα</span>
-          <button class="pill tm" data-v="08">08:30</button><button class="pill tm" data-v="12">12:00</button><button class="pill tm" data-v="15">15:00</button><button class="pill tm" data-v="18">18:00</button>
+          <button class="pill tm" data-v="08">08:30</button><button class="pill tm" data-v="12">12:00</button><button class="pill tm" data-v="15">15:00</button><button class="pill tm" data-v="18">18:00</button><button class="pill tm" data-v="09">09:00 / 09:30</button><button class="pill tm" data-v="unscheduled">Χωρίς ημέρα ή ώρα</button>
         </div>
       </div>
 
@@ -85,16 +92,16 @@
         <div class="view-head"><div><h2>Ροή προγράμματος ανά έτος</h2><p>Ονόματα αριστερά/δεξιά από το πεδίο ροών. Σε κάθε κόμβο φαίνεται η πραγματική ημερομηνία και ώρα. Κλικ σε μάθημα = highlight.</p></div><div id="alluvialHint" class="muted"></div></div>
         <div id="alluvialViewport"><svg id="alluvialSvg"></svg></div>
         <div id="inspector" class="inspector"></div>
-        <div class="legend"><span><i class="sw core"></i>Κορμός</span><span><i class="sw flowc"></i>Ροή</span><span><i class="sw hum"></i>Ανθρωπιστικό</span><span><i class="sw other"></i>Λοιπό</span><span class="muted">Στον Συνδυασμό, Κανονική και Επί πτυχίω παραμένουν ξεχωριστές σειρές.</span></div>
+        <div class="legend"><span><i class="sw core"></i>Κορμός</span><span><i class="sw flowc"></i>Ροή</span><span><i class="sw hum"></i>Ανθρωπιστικό</span><span><i class="sw other"></i>Λοιπό</span><span class="muted">Κάθε εξεταστική περίοδος παραμένει χωριστή σειρά. Οι εγγραφές χωρίς ημέρα ή ώρα εμφανίζονται στο ημερολόγιο και στον πίνακα.</span></div>
       </div>
 
       <div id="view-calendar" class="view"><div id="calendar" class="calendar"></div></div>
-      <div id="view-table" class="view"><div class="table-wrap"><table><thead><tr><th>Πρόγραμμα</th><th>Έτος</th><th>Ημερομηνία</th><th>Ώρα</th><th>Μάθημα</th><th>Έτος</th><th>Εξάμηνο</th><th>Τύπος</th><th>Ροή</th><th>Σημείωση</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
+      <div id="view-table" class="view"><div class="table-wrap"><table><thead><tr><th>Περίοδος</th><th>Έτος εξέτασης</th><th>Ημερομηνία</th><th>Ώρα</th><th>Μάθημα</th><th>Έτος σπουδών</th><th>Εξάμηνο</th><th>Τύπος</th><th>Ροή</th><th>Σημείωση</th></tr></thead><tbody id="tbody"></tbody></table></div></div>
       <div id="view-patterns" class="view"><div id="patterns" class="patterns"></div></div>
       <div id="view-sources" class="view"><div id="sources" class="sources"></div></div>
     </section>
 
-    <footer>Static web app για GitHub Pages · Δεν απαιτεί backend ή build step.</footer>
+    <footer>ΣΗΜΜΥ ΕΜΠ · Exam Atlas · Ανεπίσημο εργαλείο με παραπομπές στα επίσημα προγράμματα. Τελευταία προσθήκη: πτυχιακή χειμερινού 2027, έλεγχος 26/11/2026.</footer>
   </div>
   <div id="tooltip" class="tooltip"></div>
 
@@ -102,9 +109,23 @@
   <script src="data/regular-2024.js"></script>
   <script src="data/regular-2025.js"></script>
   <script src="data/regular-2026.js"></script>
+  <script src="data/regular-2027.js"></script>
   <script src="data/degree-2024.js"></script>
   <script src="data/degree-2025.js"></script>
   <script src="data/degree-2026.js"></script>
+  <script src="data/degree-2027.js"></script>
+  <script src="data/extra-metadata.js"></script>
+  <script src="data/period-sources.js"></script>
+  <script src="data/spring-2024.js"></script>
+  <script src="data/spring-2025.js"></script>
+  <script src="data/spring-2026.js"></script>
+  <script src="data/spring-degree-2024.js"></script>
+  <script src="data/spring-degree-2025.js"></script>
+  <script src="data/spring-degree-2026.js"></script>
+  <script src="data/resit-2024.js"></script>
+  <script src="data/resit-2025.js"></script>
+  <script src="data/resit-2026.js"></script>
+  <script src="scripts/exam-core.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

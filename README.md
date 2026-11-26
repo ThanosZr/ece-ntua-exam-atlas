@@ -1,79 +1,68 @@
-# ΣΗΜΜΥ ΕΜΠ — Winter Exam Atlas 2024–2026
+# ΣΗΜΜΥ ΕΜΠ — Exam Atlas 2024–2027
 
-Static web app for comparing the official ECE NTUA winter examination schedules.
+Στατικό εργαλείο σύγκρισης των επίσημων προγραμμάτων εξετάσεων της ΣΗΜΜΥ ΕΜΠ. Πέντε σαφώς χωριστές επιλογές: **Χειμερινή, Πτυχιακή χειμερινού, Εαρινή, Πτυχιακή εαρινού, Επαναληπτική**.
 
-## What is included
+Κάθε περίοδος θυμάται τα επιλεγμένα έτη της. Η χειμερινή και η πτυχιακή χειμερινού ανοίγουν στα 2026–2027 και οι άλλες περίοδοι στα 2025–2026. Το έτος δηλώνει το ημερολογιακό έτος εξέτασης. Τα έτη χωρίς ενσωματωμένο πρόγραμμα είναι απενεργοποιημένα. Στην επιλογή «Όλες οι περίοδοι», οι συγκρίσεις και οι συνδέσεις παραμένουν χωριστές ανά περίοδο και μάθημα.
 
-- **Κανονική / Πτυχιακή (Επί πτυχίω) / Συνδυασμός**
-- source-year filters: **2024 / 2025 / 2026**
-- filters by **study year**, **semester**, **core / flow**, **specific flow**, and **exam time**
-- full-text course search
-- highlight and **true isolation** of a selected course
-- custom SVG alluvial view with course names **outside** the flow field
-- actual **date + time per year** on each node
-- course inspector showing each selected year's date, time and normalized exam-day number
-- calendar view
-- full data table
-- patterns view for normalized exam-day movement and time consistency
-- source / validation view
-- CSV export of the currently filtered dataset
-- no framework, no backend, no build step, no external JavaScript dependency
+## Περιεχόμενο
 
-## Project structure
+| Περίοδος | 2024 | 2025 | 2026 | 2027 |
+|---|---:|---:|---:|---:|
+| Χειμερινή | 88 | 89 | 88 | 90 |
+| Πτυχιακή χειμερινού | 106 | 105 | 88 | 87 |
+| Εαρινή | 90 | 90 | 91 | — |
+| Πτυχιακή εαρινού | 89 | 88 | 83 | — |
+| Επαναληπτική | 181 | 182 | 180 | — |
 
-```text
-index.html
-styles.css
-app.js
-metadata.js
-build-validation.js
-data.csv
-validation.json
-validation-report.txt
-data/
-  regular-2024.js
-  regular-2025.js
-  regular-2026.js
-  degree-2024.js
-  degree-2025.js
-  degree-2026.js
-```
+Σύνολο **1.815 εγγραφές / 217 διαφορετικοί κανονικοποιημένοι τίτλοι**. Οι πρόσθετες περίοδοι και η πτυχιακή χειμερινού 2027 προσθέτουν 1.161 εγγραφές από εννέα επίσημα PDF. Τα επτά προϋπάρχοντα αρχεία χειμερινής/πτυχιακής χειμερινού διατηρούνται αυτούσια. Η χειμερινή 2027 βασίζεται στην έκδοση 20/11/2026 και η πτυχιακή χειμερινού 2027 στην έκδοση 25/11/2026 (7 Ιανουαρίου–12 Φεβρουαρίου 2027, 87 μαθήματα). Εαρινή, πτυχιακή εαρινού και επαναληπτική του 2027 δεν έχουν εισαχθεί.
 
-The schedule data are deliberately split by **program + year**, so corrections are isolated. For example, a correction in the 2025 regular exam schedule only requires editing `data/regular-2025.js`.
+Από το σύνολο, 175 εγγραφές δεν έχουν ορισμένη ημέρα ή ώρα. Διατηρούνται στον πίνακα, στο ημερολόγιο και στο CSV, με την αντίστοιχη σημείωση. Δεν συμμετέχουν στις συνδέσεις ή στις συγκρίσεις θέσης/ώρας.
 
-## GitHub Pages — new branch
+## Χρήση
 
-1. Create a new branch, e.g. `exam-atlas-v3`.
-2. Upload **the contents of this folder**, not the ZIP itself, to the root of that branch.
-3. Go to **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select branch `exam-atlas-v3` and folder `/(root)`.
-6. Save and wait for the Pages deployment to finish.
+- Φίλτρα έτους σπουδών, εξαμήνου, κορμού/ροής, ώρας και αναζήτηση μαθήματος.
+- Alluvial, ημερολόγιο, πλήρης πίνακας, Patterns, πηγές και έλεγχος δεδομένων.
+- Επισήμανση και απομόνωση μαθήματος, με ημερομηνίες, ώρες και σημειώσεις ανά έτος.
+- Παραπομπή από κάθε νέα εγγραφή στην αντίστοιχη σελίδα του επίσημου PDF.
+- Εξαγωγή του επιλεγμένου συνόλου σε CSV.
 
-If the repository is `AthanZour/ece-exam-pattern`, the URL will remain:
+Οι μετακινήσεις μετρώνται σε ημερολογιακές ημέρες από την αρχή κάθε πλήρους προγράμματος, πριν εφαρμοστούν φίλτρα. Κενές ημέρες και αργίες υπολογίζονται. Συγκρίνονται όλες οι δημοσιευμένες θέσεις και ώρες του ίδιου μαθήματος στην ίδια περίοδο. Δεν συνάγεται ισοδυναμία διαφορετικών τίτλων.
 
-`https://athanzour.github.io/ece-exam-pattern/`
+## GitHub Pages και αντίγραφα ασφαλείας
 
-GitHub Pages serves whichever branch is selected as the Pages source.
+Η τρέχουσα έκδοση ενσωματώνεται στη **`main`** μέσω του [PR #1](https://github.com/ThanosZr/ece-ntua-exam-atlas/pull/1), με έγκριση στις 26/11/2026. Περιλαμβάνει και τις πέντε εξεταστικές περιόδους, την κανονική χειμερινή 2027 και την πτυχιακή χειμερινού 2027.
 
-## Validation
+Η ανάπτυξη έγινε αρχικά στο `feature/all-exam-periods` και ολοκληρώθηκε στο `update/winter-degree-2027`. Τα branches και τα αντίγραφα ασφαλείας διατηρούνται. Το δημόσιο εργαλείο βρίσκεται στο https://thanoszr.github.io/ece-ntua-exam-atlas/ . Η πηγή δημοσίευσης επιλέγεται στις ρυθμίσεις Settings → Pages.
 
-Run locally, if desired:
+Πριν την ανάπτυξη δημιουργήθηκαν και επαληθεύτηκαν δύο αντίγραφα:
+
+| Branch | Ακριβές commit |
+|---|---|
+| `backup/main-before-all-periods-2026-11-22` | `eee371e1497c42802c67fc6efa0df7ade3bbf2fa` |
+| `backup/winter-atlas-2026-11-22` | `6736768fa6fee7ac5fdf73890e75ba3dd957b09c` |
+
+Το πρώτο κρατά την προηγούμενη `main`. Το δεύτερο κρατά την έκδοση με την ενημερωμένη χειμερινή 2027, από την οποία ξεκινά το νέο branch.
+
+## Δομή και έλεγχοι
+
+Δεν χρειάζεται framework, backend, εξωτερική βιβλιοθήκη JavaScript ή build για το Pages. Τα `index.html`, `styles.css`, `app.js` φορτώνουν απευθείας τα δεδομένα.
+
+- `data/regular-*.js`, `data/degree-*.js`: τα προϋπάρχοντα χειμερινά δεδομένα.
+- `data/spring-*.js`, `data/spring-degree-*.js`, `data/resit-*.js`: οι εννέα νέοι συνδυασμοί περιόδου/έτους.
+- `metadata.js`, `data/extra-metadata.js`: στοιχεία εξαμήνου, έτους σπουδών, κορμού και ροής.
+- `data/source-manifest.json`, `data/period-sources.js`: πηγές, εκδόσεις, SHA-256 και αρχές περιόδων.
+- `data/source-cells.json`: τα 1.157 μη κενά κελιά μαθημάτων των πρόσθετων PDF, για έλεγχο κάλυψης. Ορισμένα κελιά περιέχουν περισσότερα μαθήματα.
+- `scripts/exam-core.js`: κοινός υπολογισμός περιόδων και συγκρίσεων για εφαρμογή και έλεγχο Node.
+
+Με εγκατεστημένο Node.js:
 
 ```bash
 node build-validation.js
+node test-schedules.js
 ```
 
-It regenerates:
+Ο πρώτος έλεγχος ανανεώνει `data.csv`, `validation.json`, `validation-report.txt` και αποτυγχάνει σε άκυρη ημερομηνία/ώρα, διπλοεγγραφή ή μη χαρτογραφημένο εξάμηνο. Ο δεύτερος ελέγχει πηγές, κάλυψη κελιών, διαχωρισμό περιόδων και τις ειδικές περιπτώσεις των προγραμμάτων.
 
-- `data.csv`
-- `validation.json`
+Οι επισημασμένες ερμηνείες τυπογραφικών σφαλμάτων έτους και οι υπόλοιπες εξαιρέσεις περιγράφονται στο [SOURCE_CHECK.md](SOURCE_CHECK.md). Οι αλλαγές της χειμερινής 2027 παραμένουν στο [WINTER_2027_CHANGES.md](WINTER_2027_CHANGES.md).
 
-The current dataset contains **564 schedule entries** and **198 unique canonical course names**, with no exact duplicate rows and no unmapped course metadata.
-
-## Important source notes
-
-- The official **February 2024 degree / επί πτυχίω** schedule was published in March 2024 and its actual examination dates are **1–18 April 2024**. The app uses those actual dates.
-- The official 2026 degree schedule contains **Μεταγλωτιστές** on both **29/01/2026** and **03/02/2026**. The app deliberately preserves both published entries and flags the multi-date occurrence in Validation instead of silently guessing which one is intended.
-
-See `SOURCE_CHECK.md` for source links and source-handling notes.
+Η προσθήκη της πτυχιακής χειμερινού 2027 και οι έλεγχοι τεκμηριώνονται στο [WINTER_DEGREE_2027_CHANGES.md](WINTER_DEGREE_2027_CHANGES.md).

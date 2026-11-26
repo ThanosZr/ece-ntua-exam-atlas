@@ -436,7 +436,7 @@ select:focus{
 .calendar{
   padding:15px;
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(var(--calendar-columns,3),minmax(0,1fr));
   gap:13px;
 }
 
@@ -720,3 +720,18 @@ footer{
     text-align:center;
   }
 }
+.pill:disabled{opacity:.4;cursor:default;}
+
+.period-panel{margin:24px 0 18px;padding:20px;}
+.period-tabs{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px;}
+.period-tabs .pill{font-size:1rem;padding:10px 15px;}
+.period-panel h2{font-size:1.4rem;margin:0 0 7px;}
+.period-panel p{margin:6px 0;line-height:1.5;}
+.period-panel #availabilityNote{font-size:.9rem;}
+a.source-link,.source-entry a{color:#9bd0ff;}
+.source-link{display:inline-block;font-size:.85rem;white-space:nowrap;}
+.source-entry{padding:10px 0;border-bottom:1px solid var(--border);line-height:1.6;}
+.pattern-card .bar-row{grid-template-columns:minmax(0,1.65fr) minmax(55px,.7fr) 26px;}
+.pattern-card small{display:block;line-height:1.5;margin-top:3px;}
+.pill[aria-pressed="true"]{border-color:#75c6ff;}
+@media(max-width:700px){.period-panel{padding:15px;}.period-tabs .pill{flex:1 1 40%;font-size:.9rem;}}
