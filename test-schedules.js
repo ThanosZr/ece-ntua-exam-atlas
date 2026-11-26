@@ -5,7 +5,8 @@ const path=require('node:path');
 const CORE=require('./scripts/exam-core');
 const {rows:EXAM_ROWS,meta:EXAM_META,sources}=require('./scripts/load-data')();
 const DATA=CORE.prepareData(EXAM_ROWS,EXAM_META,sources);
-const current=EXAM_ROWS.filter(r=>r.source_year===2027);
+const current=EXAM_ROWS.filter(r=>r.source_year===2027&&CORE.inferPeriod(r)==='winter');
+const degree2027=DATA.filter(r=>r.source_year===2027&&r.period_id==='winter-degree');
 
 test('2027 imports the full regular schedule, with valid dates and metadata',()=>{
   assert.equal(current.length,90);
@@ -60,7 +61,7 @@ test('only three common courses move relative to the period start',()=>{
 
 test('different published titles stay separate and missing schedules are not invented',()=>{
   assert.ok(!current.some(r=>r.course==='Αγγλική Γλώσσα'));
-  assert.ok(!current.some(r=>r.exam_type==='Επί πτυχίω'));
+  assert.ok(!DATA.some(r=>r.source_year===2027&&['spring','spring-degree','resit'].includes(r.period_id)));
   assert.ok(!current.some(r=>r.course==='Ηλεκτρομαγνητικά Πεδία Β'));
   assert.ok(!current.some(r=>r.course==='Νευροασαφής Έλεγχος και Εφαρμογές'));
   assert.ok(!current.some(r=>r.course==='Ανάλυση & Σχεδιασμός Πληροφοριακών Συστημάτων'));
@@ -69,8 +70,8 @@ test('different published titles stay separate and missing schedules are not inv
 
 test('all five periods have separate identities and the expected source coverage',()=>{
   assert.deepEqual(CORE.PERIODS.map(p=>p.id),['winter','winter-degree','spring','spring-degree','resit']);
-  assert.equal(DATA.length,1728);
-  const expected={'spring|2024':90,'spring|2025':90,'spring|2026':91,'spring-degree|2024':89,'spring-degree|2025':88,'spring-degree|2026':83,'resit|2024':181,'resit|2025':182,'resit|2026':180};
+  assert.equal(DATA.length,1815);
+  const expected={'winter-degree|2027':87,'spring|2024':90,'spring|2025':90,'spring|2026':91,'spring-degree|2024':89,'spring-degree|2025':88,'spring-degree|2026':83,'resit|2024':181,'resit|2025':182,'resit|2026':180};
   for(const [key,count]of Object.entries(expected)){
     const [period,year]=key.split('|');
     const rows=DATA.filter(r=>r.period_id===period&&r.source_year===Number(year));
@@ -131,11 +132,54 @@ test('year interpretations preserve the source error and an explicit warning',()
   assert.ok(inferred.every(r=>r.source_date&&r.source_date!==r.date&&r.note.includes('Τυπωμένο έτος')));
 });
 
-test('every nonempty course cell from all eight new PDFs is represented, with no orphan provenance',()=>{
+test('every nonempty course cell from all nine imported PDFs is represented, with no orphan provenance',()=>{
   const cells=JSON.parse(fs.readFileSync(path.join(__dirname,'data/source-cells.json'),'utf8'));
   const imported=DATA.filter(r=>r.source_id);
   const expected=new Set(cells.map(c=>c.id)),actual=new Set(imported.map(r=>r.source_cell_id));
-  assert.equal(cells.length,1070);
+  assert.equal(cells.length,1157);
   assert.deepEqual([...actual].sort(),[...expected].sort());
-  assert.equal(new Set(cells.map(c=>c.source_id)).size,8);
+  assert.equal(new Set(cells.map(c=>c.source_id)).size,9);
+});
+
+test('winter degree 2027 covers all seven PDF pages, dates, semesters and consultation notes',()=>{
+  assert.equal(degree2027.length,87);
+  assert.equal(new Set(degree2027.map(r=>r.course)).size,87);
+  assert.equal(new Set(degree2027.map(r=>r.date)).size,27);
+  assert.deepEqual(Array.from({length:7},(_,i)=>degree2027.filter(r=>r.source_page===i+1).length),[14,16,12,12,15,10,8]);
+  const cells=JSON.parse(fs.readFileSync(path.join(__dirname,'data/source-cells.json'),'utf8'));
+  for(const row of degree2027){
+    const cell=cells.find(c=>c.id===row.source_cell_id);
+    assert.equal(row.date,cell.printed_date);
+    assert.equal(row.time,cell.printed_time_cell.padStart(5,'0'));
+    assert.equal(row.semester,(row.source_column-1)*2);
+    assert.equal(row.exam_type,'Επί πτυχίω');
+    assert.ok(row.is_scheduled);
+    assert.equal(row.note.includes('διδάσκοντα'),cell.text.includes('Διδάσκοντα'));
+  }
+  assert.equal(degree2027.find(r=>r.date==='07/01/2027').period_day,0);
+  assert.equal(degree2027.find(r=>r.date==='12/02/2027').period_day,36);
+});
+
+test('winter degree 2027 uses its own published times and titles rather than a shifted 2026 copy',()=>{
+  const slot=(course,date,time)=>{
+    const row=degree2027.find(r=>r.course===course);
+    assert.ok(row,course);assert.equal(row.date,date);assert.equal(row.time,time);
+    return row;
+  };
+  slot('Μηχανική (Κινηματική Δυναμική του Στερεού Σώματος)','07/01/2027','18:00');
+  slot('Συστήματα Ελέγχου Ηλ. Μηχανών','18/01/2027','15:00');
+  slot('Τεχνικές Προβλέψεων','03/02/2027','18:00');
+  slot('Αγγλική Γλώσσα','02/02/2027','12:00');
+  slot('Σχεδίαση Συστημάτων Αυτομάτου Ελέγχου','02/02/2027','18:00');
+  slot('Διαφορικές Εξισώσεις','10/02/2027','18:00');
+  slot('Αριθμητική Ανάλυση','12/02/2027','18:00');
+  slot('Μοντέλα Αποφάσεων και Διοίκησης για το Κλίμα','12/02/2027','15:00');
+  slot('Μεταγλωτιστές','01/02/2027','18:00');
+  assert.equal(degree2027.filter(r=>r.course==='Μεταγλωτιστές').length,1);
+  assert.ok(!degree2027.some(r=>r.course==='Ηλεκτρομαγνητικά Πεδία Α'||r.course==='Ψηφιακές Επικοινωνίες Ι'));
+  assert.ok(degree2027.some(r=>r.course==='Στατικά Ηλεκτρικά & Μαγνητικά Πεδία'));
+  assert.ok(degree2027.some(r=>r.source_title==='Ψηφιακές Επικοινωνίες Ι: Σύντομη Θεωρία και Εργαστήριο'));
+  const comparison=CORE.compareYears(DATA.filter(r=>r.period_id==='winter-degree'),[2026,2027]);
+  assert.ok(comparison.length>70);
+  assert.ok(comparison.every(r=>r.period_id==='winter-degree'));
 });

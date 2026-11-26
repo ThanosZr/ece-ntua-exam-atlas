@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-11-22T11:50:41.374Z",
-  "records": 1728,
+  "generated_at": "2026-11-26T09:15:09.688Z",
+  "records": 1815,
   "unique_courses": 217,
   "counts": {
     "Χειμερινή 2024": {
@@ -39,8 +39,8 @@
       "without_fixed_day_or_time": 0
     },
     "Πτυχιακή χειμερινού 2027": {
-      "records": 0,
-      "scheduled": 0,
+      "records": 87,
+      "scheduled": 87,
       "without_fixed_day_or_time": 0
     },
     "Εαρινή 2024": {

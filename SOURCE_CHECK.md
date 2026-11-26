@@ -10,7 +10,7 @@ The application is based on official ECE NTUA / ΣΗΜΜΥ published schedules.
 - 2027: https://www.ece.ntua.gr/el/announcementDetails/27296992-e50b-11f1-a8c2-000c296d8b20
 - 2027 PDF, edition 20261120: https://www.ece.ntua.gr/api/files/display?type=announcements&itemId=27296992-e50b-11f1-a8c2-000c296d8b20&filename=1795197148956-Programma_cheimerinis_exetastikis_ak._etous_2026-2027.pdf
 
-Checked 20 November 2026. The announcement was published at 17:52 UTC that day. The PDF contains 90 scheduled entries (89 courses, because the electromagnetic-fields course has two surname groups). Its third page continues 29 January at 18:00 with Γλώσσες Προγραμματισμού ΙΙ; that continuation is included. Consultation notes and the philosophy co-examination note are retained. No 2027 degree schedule has been imported.
+Checked 20 November 2026. The announcement was published at 17:52 UTC that day. The PDF contains 90 scheduled entries (89 courses, because the electromagnetic-fields course has two surname groups). Its third page continues 29 January at 18:00 with Γλώσσες Προγραμματισμού ΙΙ; that continuation is included. Consultation notes and the philosophy co-examination note are retained. The 2027 winter-degree schedule was subsequently imported on 26 November 2026; see the section below.
 
 The 2026 regular dataset had two outdated titles, corrected to the titles actually printed in its official PDF: `Τεχνολογίες Κινητού Υπολογισμού με Μηχανική Μάθηση` and `Προηγμένες Εφαρμογές Ηλεκτρομαγνητικής Θεωρίας`. Their dates and times are unchanged. The 2027 titles `Δυναμικά Ηλεκτρομαγνητικά Πεδία`, `Έλεγχος Βάσει Μάθησης`, and `Συστήματα Διαχείρισης Πληροφοριών` remain separate from the older titles; no curricular equivalence is inferred.
 
@@ -82,4 +82,15 @@ The initial printed day of a program is used even if it has no course entry. The
 
 ### Validation outcome
 
-There are 1,728 rows and 217 canonical course titles: 1,553 rows with both date and time, and 175 without one or both. There are no exact duplicate rows, invalid interpreted dates/times, or courses without semester metadata. Eight rows carry explicit source-year interpretations. The pre-existing 2026 winter-degree two-date compiler case remains preserved. No new 2027 spring, spring-degree, resit, or winter-degree dataset was invented.
+After the 26 November winter-degree update there are 1,815 rows and 217 canonical course titles: 1,640 rows with both date and time, and 175 without one or both. There are no exact duplicate rows, invalid interpreted dates/times, or courses without semester metadata. Eight rows carry explicit source-year interpretations. The pre-existing 2026 winter-degree two-date compiler case remains preserved. No 2027 spring, spring-degree, or resit dataset has been imported.
+
+
+## Winter degree 2027 — checked 26 November 2026
+
+Official announcement: https://www.ece.ntua.gr/el/announcementDetails/61c43bbf-e8d1-11f1-a8c2-000c296d8b20
+
+The seven-page PDF, edition **v20261125**, contains **87 nonempty course cells and 87 entries**, across 27 dates from **7 January to 12 February 2027**. Page counts are 14, 16, 12, 12, 15, 10 and 8. All seven rendered pages were visually checked against the extracted grid. Every entry preserves its source page, course cell, column/semester and printed title; venue and consultation notes are retained. The 46 consultation entries have a date/time printed in the PDF; those slots are retained alongside the consultation note.
+
+`data/source-manifest.json` records the PDF URL, byte count and SHA-256. `data/source-cells.json` preserves the extracted original cells and their printed dates and times. Spurious character spacing in the text layer (Θεωρία, Προηγμένα, Ενεργειακή, Εισαγωγή) was repaired using the visible text. Accents, abbreviations and `και`/`&` variants use established canonical titles while `source_title` retains the published wording. The longer mechanics and digital-communications titles and the static-fields title remain separate from the shorter/different titles in the 2026 winter-degree dataset; curricular equivalence is not inferred.
+
+The semester is taken from the PDF column (2, 4, 6 or 8), including English in semester 4. The single compiler entry on 1 February 2027 is retained independently from the two printed dates in 2026. No earlier dataset module was modified. Comparisons use the period start **07/01/2027**, and the winter-degree view automatically defaults to 2026–2027.

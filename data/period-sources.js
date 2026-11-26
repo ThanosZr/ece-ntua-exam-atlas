@@ -1,4 +1,4 @@
-// Official PDF versions verified on 22 November 2026.
+// Official PDF source registry. Latest addition checked on 26 November 2026.
 window.EXAM_SOURCES.push(...[
   {
     "id": "spring-combined-2024",
@@ -161,5 +161,27 @@ window.EXAM_SOURCES.push(...[
     "url": "https://www.ece.ntua.gr/el/announcementDetails/42dc4007-8944-5ebd-acb4-5a0621a02fe0",
     "label": "Πρόγραμμα της Επαναληπτικής Περιόδου Σεπτεμβρίου 2024",
     "pages": 6
+  },
+  {
+    "id": "winter-degree-2027",
+    "announcement_id": "61c43bbf-e8d1-11f1-a8c2-000c296d8b20",
+    "title": "Πρόγραμμα Επί Πτυχίω Χειμερινής Εξεταστικής ακ. έτους 2026-2027",
+    "announcement_url": "https://www.ece.ntua.gr/el/announcementDetails/61c43bbf-e8d1-11f1-a8c2-000c296d8b20",
+    "pdf_url": "https://www.ece.ntua.gr/api/files/display?filename=1795612141119-PROGRAMMA_cheimerinis_epi_ptychio_2027v20261125_final.pdf&itemId=61c43bbf-e8d1-11f1-a8c2-000c296d8b20&type=announcements",
+    "sha256": "e5091de95dad12cdede9d65b3cb2d7f7fcabc05c5e205835bd4441fd898d6250",
+    "bytes": 94881,
+    "period_starts": {
+      "winter-degree": "07/01/2027"
+    },
+    "periods": [
+      "winter-degree"
+    ],
+    "program": "Επί πτυχίω",
+    "year": 2027,
+    "url": "https://www.ece.ntua.gr/el/announcementDetails/61c43bbf-e8d1-11f1-a8c2-000c296d8b20",
+    "label": "Πρόγραμμα Επί Πτυχίω Χειμερινής 2026–2027 · έκδοση 25/11/2026",
+    "pages": 7,
+    "edition": "v20261125",
+    "checked_on": "2026-11-26"
   }
 ]);
